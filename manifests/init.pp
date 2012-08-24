@@ -184,8 +184,8 @@ class vmwaretools (
 				owner => root,
 				group => root,
 				mode => 644,
-				content => "deb http://packages.vmware.com/tools/esx/${tools_version}/ubuntu ${lsbdistcodename} main"
-				notify => Exec['vmware_repo_key']
+				content => "deb http://packages.vmware.com/tools/esx/${tools_version}/ubuntu ${lsbdistcodename} main",
+				notify => Exec['vmware_repo_key'],
 			}
 			
 			exec { "vmware_repo_key":
