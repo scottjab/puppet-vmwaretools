@@ -178,6 +178,23 @@ class vmwaretools (
             before   => Package[$package_real],
           }
         }
+		'Ubuntu': {
+			file { "vmware-tools.list":
+				ensure => file,
+				owner => root,
+				group => root,
+				mode => 644,
+				content => "deb http://packages.vmware.com/tools/esx/${tools_version}/ubuntu ${lsbdistcodename} main"
+				notify => Exec['vmware_repo_key']
+			}
+			
+			exec { "vmware_repo_key":
+				command => "wget http://packages.vmware.com/tools/keys/VMWARE-PACKAGING-GPG-RSA-KEY.pub -q -O- | apt-key add -",
+				path => "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
+				refreshonly => true,
+			}
+			
+		}
         default: { }
       }
 

@@ -9,7 +9,7 @@ branches:
     - master
 notifications:
   email:
-    - github@razorsedge.org
+    - ericdallen@icloud.com
 env:
   - PUPPET_VERSION=2.6.4
   - PUPPET_VERSION=2.6.9

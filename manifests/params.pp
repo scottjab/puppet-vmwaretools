@@ -142,6 +142,13 @@ class vmwaretools::params {
       }
       $baseurl_string = 'suse'  # must be lower case
     }
+	'Ubuntu':{
+		$package_name_5x = ['vmware-tools-esx-nox', "vmware-tools-esx-kmods-${kernelrelease}"]
+		$package_name_4x = ['vmware-tools-esx-nox', "vmware-tools-esx-kmods-${kernelrelease}"]
+		$service_name_5x = 'vmware-tools-services'
+		$service_name_4x = 'vmware-tools'
+		$srevice_hasstatus_5x = true
+	}
     default: {
       fail("Unsupported platform: ${::operatingsystem}")
     }
