@@ -179,10 +179,7 @@ class vmwaretools (
         }
         'OEL', 'SLES', 'SLED', 'OpenSuSE',
         'SuSE': {
-          $majdistrelease = $::lsbmajdistrelease ? {
-            ''      => regsubst($::operatingsystemrelease,'^(\d+)\.(\d+)','\1'),
-            default => $::lsbmajdistrelease,
-          }
+          $majdistrelease = $::operatingsystemrelease
           zypprepo {"vmware-tools":
             descr    => "VMware Tools ${tools_version} - ${vmwaretools::params::baseurl_string}${majdistrelease} ${yum_basearch}",
             enabled  => 1,
