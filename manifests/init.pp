@@ -191,7 +191,7 @@ class vmwaretools (
             baseurl  => "${vmwaretools::params::yum_server}${vmwaretools::params::yum_path}/esx/${tools_version}/${vmwaretools::params::baseurl_string}${majdistrelease}/${yum_basearch}/",
             priority => $vmwaretools::params::yum_priority,
             path     => "/",
-            type     => "yum"
+            type     => "yum",
             before   => Package[$package_real],
           }
         }
