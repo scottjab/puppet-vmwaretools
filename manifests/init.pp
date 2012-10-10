@@ -183,11 +183,12 @@ class vmwaretools (
           #trying a hack to get gpg signing to work, the repo file doesn't seem to allow more than one key.
           exec { "rpm dsa":
             command => "rpm --import ${vmwaretools::params::yum_server}${vmwaretools::params::yum_path}/keys/VMWARE-PACKAGING-GPG-DSA-KEY.pub",
+            path => "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
           }
           exec { "rpm rsa":
             command => "/rpm --import ${vmwaretools::params::yum_server}${vmwaretools::params::yum_path}/keys/VMWARE-PACKAGING-GPG-RSA-KEY.pub",
+            path => "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
           }
-
           zypprepo {"vmware-tools":
             descr    => "VMware Tools ${tools_version} - ${vmwaretools::params::baseurl_string}${majdistrelease} ${yum_basearch}",
             enabled  => 1,
