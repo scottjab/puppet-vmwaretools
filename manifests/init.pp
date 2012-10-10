@@ -184,10 +184,12 @@ class vmwaretools (
           exec { "rpm dsa":
             command => "rpm --import ${vmwaretools::params::yum_server}${vmwaretools::params::yum_path}/keys/VMWARE-PACKAGING-GPG-DSA-KEY.pub",
             path => "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
+            refreshonly => true,
           }
           exec { "rpm rsa":
             command => "rpm --import ${vmwaretools::params::yum_server}${vmwaretools::params::yum_path}/keys/VMWARE-PACKAGING-GPG-RSA-KEY.pub",
             path => "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
+            refreshonly => true,
           }
           zypprepo {"vmware-tools":
             descr    => "VMware Tools ${tools_version} - ${vmwaretools::params::baseurl_string}${majdistrelease} ${yum_basearch}",
