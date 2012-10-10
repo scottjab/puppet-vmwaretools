@@ -180,11 +180,18 @@ class vmwaretools (
         'OEL', 'SLES', 'SLED', 'OpenSuSE',
         'SuSE': {
           $majdistrelease = $::operatingsystemrelease
+          #trying a hack to get gpg signing to work, the repo file doesn't seem to allow more than one key.
+          exec { "rpm dsa":
+            command => "rpm --import ${vmwaretools::params::yum_server}${vmwaretools::params::yum_path}/keys/VMWARE-PACKAGING-GPG-DSA-KEY.pub",
+          }
+          exec { "rpm rsa":
+            command => "/rpm --import ${vmwaretools::params::yum_server}${vmwaretools::params::yum_path}/keys/VMWARE-PACKAGING-GPG-RSA-KEY.pub",
+          }
+
           zypprepo {"vmware-tools":
             descr    => "VMware Tools ${tools_version} - ${vmwaretools::params::baseurl_string}${majdistrelease} ${yum_basearch}",
             enabled  => 1,
             gpgcheck => 1,
-            gpgkey   => "${vmwaretools::params::yum_server}${vmwaretools::params::yum_path}/keys/VMWARE-PACKAGING-GPG-DSA-KEY.pub\n    ${vmwaretools::params::yum_server}${vmwaretools::params::yum_path}/keys/VMWARE-PACKAGING-GPG-RSA-KEY.pub",
             baseurl  => "${vmwaretools::params::yum_server}${vmwaretools::params::yum_path}/esx/${tools_version}/${vmwaretools::params::baseurl_string}${majdistrelease}/${yum_basearch}/",
             priority => $vmwaretools::params::yum_priority,
             path     => "/",
