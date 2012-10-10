@@ -140,7 +140,7 @@ class vmwaretools::params {
         'i386'  => 'i586',
         default => $::architecture,
       }
-      $baseurl_string = 'suse'  # must be lower case
+      $baseurl_string = 'sles'  # must be lower case
     }
     default: {
       fail("Unsupported platform: ${::operatingsystem}")
