@@ -159,8 +159,7 @@ class vmwaretools (
       # (like Fedora) need to be excluded.
       case $::operatingsystem {
         'RedHat', 'CentOS', 'Scientific', 'SLC', 'Ascendos', 'PSBM',
-        'OracleLinux', 'OVS', 'OEL', 'SLES', 'SLED', 'OpenSuSE',
-        'SuSE': {
+        'OracleLinux', 'OVS': {
           $majdistrelease = $::lsbmajdistrelease ? {
             ''      => regsubst($::operatingsystemrelease,'^(\d+)\.(\d+)','\1'),
             default => $::lsbmajdistrelease,
@@ -175,6 +174,24 @@ class vmwaretools (
             baseurl  => "${vmwaretools::params::yum_server}${vmwaretools::params::yum_path}/esx/${tools_version}/${vmwaretools::params::baseurl_string}${majdistrelease}/${yum_basearch}/",
             priority => $vmwaretools::params::yum_priority,
             protect  => $vmwaretools::params::yum_protect,
+            before   => Package[$package_real],
+          }
+        }
+        'OEL', 'SLES', 'SLED', 'OpenSuSE',
+        'SuSE': {
+          $majdistrelease = $::lsbmajdistrelease ? {
+            ''      => regsubst($::operatingsystemrelease,'^(\d+)\.(\d+)','\1'),
+            default => $::lsbmajdistrelease,
+          }
+          zypprepo {"vmware-tools":
+            descr    => "VMware Tools ${tools_version} - ${vmwaretools::params::baseurl_string}${majdistrelease} ${yum_basearch}",
+            enabled  => 1,
+            gpgcheck => 1,
+            gpgkey   => "${vmwaretools::params::yum_server}${vmwaretools::params::yum_path}/keys/VMWARE-PACKAGING-GPG-DSA-KEY.pub\n    ${vmwaretools::params::yum_server}${vmwaretools::params::yum_path}/keys/VMWARE-PACKAGING-GPG-RSA-KEY.pub",
+            baseurl  => "${vmwaretools::params::yum_server}${vmwaretools::params::yum_path}/esx/${tools_version}/${vmwaretools::params::baseurl_string}${majdistrelease}/${yum_basearch}/",
+            priority => $vmwaretools::params::yum_priority,
+            path     => "/",
+            type     => "yum"
             before   => Package[$package_real],
           }
         }
