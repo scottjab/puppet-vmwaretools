@@ -202,36 +202,36 @@ class vmwaretools (
             before   => Package[$package_real],
           }
         }
-		'Ubuntu': {
-			file { "${vmwaretools::params::debian_apt_sources}/vmware-tools.list":
-				ensure => file,
-				owner => root,
-				group => root,
-				mode => 644,
-				content => "deb http://packages.vmware.com/tools/esx/${tools_version}/ubuntu ${lsbdistcodename} main",
-				notify => Exec['vmware_repo_key'],
-			}
-			
-			exec { "vmware_repo_key":
-				command => "wget http://packages.vmware.com/tools/keys/VMWARE-PACKAGING-GPG-RSA-KEY.pub -q -O- | apt-key add -",
-				path => "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
-				refreshonly => true,
-				notify => Exec['apt_refresh'],
-			}
-			
-			exec { "apt_refresh":
-				command => "/usr/bin/apt-get update",
-				#path => "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
-				refreshonly => true,
-			}
-			
-			file { "/etc/init.d/$service_name_real":
-				ensure => link,
-				target => "/etc/vmware-tools/init/$service_name_real",
-				require => Package[$package_real],
-			}
-			
-		}
+    		'Ubuntu': {
+    			file { "${vmwaretools::params::debian_apt_sources}/vmware-tools.list":
+    				ensure => file,
+    				owner => root,
+    				group => root,
+    				mode => 644,
+    				content => "deb http://packages.vmware.com/tools/esx/${tools_version}/ubuntu ${lsbdistcodename} main",
+    				notify => Exec['vmware_repo_key'],
+    			}
+    			
+    			exec { "vmware_repo_key":
+    				command => "wget http://packages.vmware.com/tools/keys/VMWARE-PACKAGING-GPG-RSA-KEY.pub -q -O- | apt-key add -",
+    				path => "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
+    				refreshonly => true,
+    				notify => Exec['apt_refresh'],
+    			}
+    			
+    			exec { "apt_refresh":
+    				command => "/usr/bin/apt-get update",
+    				#path => "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
+    				refreshonly => true,
+    			}
+    			
+    			file { "/etc/init.d/$service_name_real":
+    				ensure => link,
+    				target => "/etc/vmware-tools/init/$service_name_real",
+    				require => Package[$package_real],
+    			}
+    			
+    		}
 
         default: { }
       }

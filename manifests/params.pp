@@ -142,13 +142,14 @@ class vmwaretools::params {
       }
       $baseurl_string = 'sles'  # must be lower case
     }
-	'Debian': {
-		case $::operatingsystem {
+	  'Debian': {
+		  case $::operatingsystem {
 			'Ubuntu': {
 				$package_name_5x = ['vmware-tools-esx-nox', "vmware-tools-esx-kmods-${kernelrelease}"]
 				$package_name_4x = ['vmware-tools-esx-nox', "vmware-tools-esx-kmods-${kernelrelease}"]
 				$service_name_5x = 'vmware-tools-services'
 				$service_name_4x = 'vmware-tools'
+        $debian_apt_sources = '/etc/apt/sources.list.d'
 				$srevice_hasstatus_5x = true
 			}
 			default: {}
