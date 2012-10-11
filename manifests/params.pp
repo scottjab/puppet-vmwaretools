@@ -145,7 +145,8 @@ class vmwaretools::params {
 	  'Debian': {
 		  case $::operatingsystem {
 			'Ubuntu': {
-				$package_name_5x = ['vmware-tools-esx-nox', "vmware-tools-esx-kmods-${kernelrelease}"]
+        #Hack to get this to work for now, the kernel release has now advanced past what vmware provides
+				$package_name_5x = ['vmware-tools-esx-nox', "vmware-tools-esx-kmods-3.2.0-23"]
 				$package_name_4x = ['vmware-tools-esx-nox', "vmware-tools-esx-kmods-${kernelrelease}"]
 				$service_name_5x = 'vmware-tools-services'
 				$service_name_4x = 'vmware-tools'
