@@ -207,7 +207,7 @@ class vmwaretools (
             path     => "/",
             type     => "yum",
             before   => Package[$package_real],
-            requires => [Exec['suse_vmware_dsa'], Exec['suse_vmware_rsa']]
+            require => [Exec['suse_vmware_dsa'], Exec['suse_vmware_rsa']]
                         
           }
         }
